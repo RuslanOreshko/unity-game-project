@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator animator;
+    [SerializeField] private GroundCheck groundCheck;
 
     private PlayerInputHandler input;
 
@@ -16,5 +17,6 @@ public class PlayerAnimator : MonoBehaviour
     {
         float speed = Mathf.Abs(input.MoveInput.x);
         animator.SetFloat("Speed", speed);
+        animator.SetBool("IsGrounded", groundCheck.IsGrounded);
     }
 }
