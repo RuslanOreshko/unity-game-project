@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class WorldSwitcher : MonoBehaviour
 {
@@ -7,9 +8,14 @@ public class WorldSwitcher : MonoBehaviour
     [SerializeField] private GameObject dreamObjects;
     [SerializeField] private PlayerInputHandler input;
 
+
+    [SerializeField] private Image transitionImage;
+    [SerializeField] private float transitionTime = 0.2f;
+
+
     [Header("Dream settings")]
     [SerializeField] private float dreamDuration = 3f;
-    [SerializeField] private float coolDown = 10f;
+    [SerializeField] private float coolDown = 5f;
     [SerializeField] private Image dreamBar;
 
     private bool isDream = false;
@@ -35,13 +41,13 @@ public class WorldSwitcher : MonoBehaviour
 
             if(dreamTimer <= 0)
             {
-                ExitDream();
+                StartCoroutine(SwitchEffect(false));
             }
         }
 
         if (input.SwitchWorldPressed && !isDream && coolDownTimer <= 0)
         {
-            EnterDream();
+            StartCoroutine(SwitchEffect(true));
         }
 
         UpdateBar();
@@ -79,5 +85,38 @@ public class WorldSwitcher : MonoBehaviour
         {
             dreamBar.fillAmount = 1;
         }
+    }
+
+    private IEnumerator SwitchEffect(bool enterDream)
+    {
+        yield return Fade(0f, 1f);
+
+        if (enterDream)
+            EnterDream();
+        else
+            ExitDream();
+
+        yield return Fade(1f, 0f);
+    }
+
+    private IEnumerator Fade(float startAlpha, float endAlpha)
+    {
+        float time = 0f;
+
+        Color color = transitionImage.color;
+
+        while (time < transitionTime)
+        {
+            float t = time / transitionTime;
+
+            color.a = Mathf.Lerp(startAlpha, endAlpha, t);
+            transitionImage.color = color;
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        color.a = endAlpha;
+        transitionImage.color = color;
     }
 }
