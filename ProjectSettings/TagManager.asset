@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Spike
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -49,6 +51,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1789252449
+    locked: 0
+  - name: Enemy
+    uniqueID: 3485576039
     locked: 0
   m_RenderingLayers:
   - Default
