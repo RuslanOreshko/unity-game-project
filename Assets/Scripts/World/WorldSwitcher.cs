@@ -119,4 +119,11 @@ public class WorldSwitcher : MonoBehaviour
         color.a = endAlpha;
         transitionImage.color = color;
     }
+
+    public void ReduceCooldown()
+    {
+        coolDown = Mathf.Max(1f, coolDown - 3f);
+
+        Debug.Log($"Cooldown: {coolDown}");
+    }
 }
