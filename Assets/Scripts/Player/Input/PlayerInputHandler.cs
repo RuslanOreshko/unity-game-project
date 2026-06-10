@@ -8,6 +8,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool JumpHeld { get; private set; }
     public bool SwitchWorldPressed { get; private set; }
 
+    public bool InteractPressed { get; private set; }
+
     private PlayerInputActions inputActions;
     [SerializeField] private float jumpBufferTime = 0.12f;
 
@@ -30,6 +32,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         MoveInput = inputActions.Player.Move.ReadValue<Vector2>();
         SwitchWorldPressed = inputActions.Player.SwitchWorld.WasPressedThisFrame();
+
+        InteractPressed = inputActions.Player.Interact.WasPressedThisFrame();
 
         if (JumpBufferTimer > 0)
             JumpBufferTimer -= Time.deltaTime;
